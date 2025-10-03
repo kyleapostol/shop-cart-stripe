@@ -1,10 +1,11 @@
 "use client";
 
-import Image from "next/image";                 // ← add
+import Image from "next/image";              
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { FiTrash2 } from "react-icons/fi";
 import { useCart } from "@/components/CartProvider";
+import { useRouter } from "next/navigation";
 
 type ProductLite = {
   id: number;
@@ -18,6 +19,9 @@ export default function CartClient() {
   const { items, setQty, remove, clear } = useCart();
   const [products, setProducts] = useState<Record<number, ProductLite>>({});
   const ids = useMemo(() => items.map((i) => i.productId), [items]);
+
+  const router = useRouter();
+
 
   useEffect(() => {
     let abort = false;
@@ -167,7 +171,9 @@ export default function CartClient() {
         <div className="text-lg">
           Subtotal: <span className="font-semibold">${(subtotalCents / 100).toFixed(2)}</span>
         </div>
-        <button className="rounded-lg border px-4 py-2 text-sm">Checkout</button>
+        <button className="rounded-lg border px-4 py-2 text-sm" onClick={() => router.push("/checkout")}>
+          Checkout
+        </button>
       </div>
     </div>
   );
