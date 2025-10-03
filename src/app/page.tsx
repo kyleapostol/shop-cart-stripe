@@ -7,7 +7,6 @@ export default async function Page() {
     orderBy: { createdAt: "desc" },
     select: { id: true, slug: true, name: true, description: true, priceCents: true, imageUrl: true },
   });
-  console.log('products', products)
   return (
     <div>
       <h1 className="text-2xl mb-4">Products</h1>
@@ -22,7 +21,6 @@ export default async function Page() {
                 className="block focus:outline-none focus:ring-2 focus:ring-black/20 rounded-lg"
                 aria-label={`View details for ${p.name}`}
               >
-                {/* next/image prevents CLS */}
                 <Image
                   src={p.imageUrl}
                   alt={p.name}
@@ -37,7 +35,6 @@ export default async function Page() {
                   ${(p.priceCents / 100).toFixed(2)}
                 </div>
               </Link>
-
             </div>
           );
         })}

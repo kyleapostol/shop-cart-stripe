@@ -9,11 +9,6 @@ export function Header() {
         <Link href="/" className="font-extrabold">SoleX</Link>
 
         <nav className="flex items-center gap-5">
-          {/* <Link href="/orders" className="inline-flex items-center gap-2 text-sm hover:underline">
-            <FiPackage className="h-5 w-5" />
-            <span>Orders</span>
-          </Link> */}
-
           <CartIndicator />
         </nav>
       </div>
