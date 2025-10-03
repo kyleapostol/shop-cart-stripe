@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { CartIndicator } from "@/components/CartIndicator";
-import { FiPackage } from "react-icons/fi";
+// import { FiPackage } from "react-icons/fi";
 
 export function Header() {
   return (
