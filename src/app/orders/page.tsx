@@ -1,4 +1,5 @@
 import { prisma } from "../../lib/db";
+import { FiPackage } from "react-icons/fi";
 
 
 export const dynamic = "force-dynamic";
@@ -12,8 +13,11 @@ export default async function OrdersPage() {
     });
     return (
         <div>
-            <h1 style={{ fontSize: 24, marginBottom: 16 }}>Recent Orders (demo)</h1>
-            {!orders.length && <p>No orders yet.</p>}
+            <h1 className="mb-4 flex items-center gap-2 text-2xl font-semibold">
+                <FiPackage className="h-6 w-6" />
+                Recent Orders
+            </h1>
+            {!orders.length && <p>You have no orders yet.</p>}
             {orders.map(o => (
                 <div key={o.id} className="card" style={{ marginBottom: 12 }}>
                     <div><strong>{o.status.toUpperCase()}</strong> — ${(o.amountCents / 100).toFixed(2)} — {new Date(o.createdAt).toLocaleString()}</div>
