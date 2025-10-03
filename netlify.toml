@@ -1,0 +1,14 @@
+[build]
+  command = "npm run build && npx prisma migrate deploy"
+  publish = ".next"
+
+# Next.js runtime (SSR, API routes, images)
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Optional: allocate more time/memory for heavy API routes
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["@prisma/client"]
+
+# If you use Stripe webhooks and need raw body in a Next route, keep it in a Node runtime (not Edge).
