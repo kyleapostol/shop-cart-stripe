@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+// prisma/schema.prisma
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  SHIPPED
+  CANCELED
+}
+
+
+model Order {
+  id          Int          @id @default(autoincrement())
+  email       String
+  stripeId    String?
+  status      OrderStatus  @default(PENDING)
+  amountCents Int
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  items       OrderItem[]
+}
+
+model OrderItem {
+  id             Int  @id @default(autoincrement())
+  orderId        Int
+  productId      Int
+  quantity       Int  @default(1)
+  unitPriceCents Int
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+
+  @@unique([orderId, productId])   // ← composite unique (two @ signs)
+  @@index([orderId])
+  @@index([productId])
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  name        String
+  color       String?
+  priceCents  Int
+  imageUrl    String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // back-relation so Prisma can wire the relation
+  orderItems  OrderItem[]
+}
