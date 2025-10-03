@@ -29,7 +29,6 @@ export default async function ProductPage({
     },
   });
 
-  console.log('PRODUCT PAGE:', product)
   if (!product) return notFound();
 
   const candidates = expandImageVariants(product.imageUrl);
